@@ -6,22 +6,22 @@
 " Setup
 set background=dark
 if version > 580
-	hi clear
-	if exists("syntax_on")
-		syntax reset
-	endif
+  hi clear
+  if exists("syntax_on")
+    syntax reset
+  endif
 endif
 
 set t_Co=256
 if has('termguicolors')
-    set termguicolors
+  set termguicolors
 endif
 
 let g:colors_name = "snazzy"
 
 " User Options
 if !exists("g:SnazzyTransparent")
-    let g:SnazzyTransparent = 0
+  let g:SnazzyTransparent = 0
 endif
 
 " Core
@@ -46,27 +46,56 @@ let  ui_9     =  '#3a3d4d'
 let  ui_11    =  '#282a36'
 let  ui_12    =  '#192224'
 
-let g:terminal_color_0 = '#282a36'
-let g:terminal_color_1 = '#ff5c57'
-let g:terminal_color_2 = '#5af78e'
-let g:terminal_color_3 = '#f3f99d'
-let g:terminal_color_4 = '#57c7ff'
-let g:terminal_color_5 = '#ff6ac1'
-let g:terminal_color_6 = '#9aedfe'
-let g:terminal_color_7 = '#f1f1f0'
-let g:terminal_color_8 = '#43454F'
-let g:terminal_color_9 = '#ff5c57'
-let g:terminal_color_10 = '#5af78e'
-let g:terminal_color_11 = '#f3f99d'
-let g:terminal_color_12 = '#57c7ff'
-let g:terminal_color_13 = '#ff6ac1'
-let g:terminal_color_14 = '#9aedfe'
-let g:terminal_color_15 = '#eff0eb'
+" Terminal
+if has("nvim")
+  let g:terminal_color_0 =  "#282a36"
+  let g:terminal_color_1 =  "#ff5c57"
+  let g:terminal_color_2 =  "#5af78e"
+  let g:terminal_color_3 =  "#f3f99d"
+  let g:terminal_color_4 =  "#57c7ff"
+  let g:terminal_color_5 =  "#ff6ac1"
+  let g:terminal_color_6 =  "#9aedfe"
+  let g:terminal_color_7 =  "#e2e4e5"
+  let g:terminal_color_8 =  "#78787e"
+  let g:terminal_color_9 =  "#ff5c57"
+  let g:terminal_color_10 = "#5af78e"
+  let g:terminal_color_11 = "#f3f99d"
+  let g:terminal_color_12 = "#57c7ff"
+  let g:terminal_color_13 = "#ff6ac1"
+  let g:terminal_color_14 = "#9aedfe"
+  let g:terminal_color_15 = "#f1f1f0"
+  let g:terminal_color_background = g:terminal_color_0
+  let g:terminal_color_foreground = g:terminal_color_5
+  if &background == "light"
+    let g:terminal_color_background = g:terminal_color_7
+    let g:terminal_color_foreground = g:terminal_color_2
+  endif
+elseif has("terminal")
+  let g:terminal_ansi_colors = [
+    \ "#282a36",
+    \ "#ff5c57",
+    \ "#5af78e",
+    \ "#f3f99d",
+    \ "#57c7ff",
+    \ "#ff6ac1",
+    \ "#9aedfe",
+    \ "#e2e4e5",
+    \ "#78787e",
+    \ "#ff5c57",
+    \ "#5af78e",
+    \ "#f3f99d",
+    \ "#57c7ff",
+    \ "#ff6ac1",
+    \ "#9aedfe",
+    \ "#f1f1f0",
+    \ ]
+endif
 
 "hi CTagsMember -- no settings --
 "hi CTagsGlobalConstant -- no settings --
 "hi Ignore -- no settings --
 :exe  'highlight  Normal          guifg='.ui_1.'      guibg='.ui_11.'   guisp='.ui_11.'   gui=NONE       ctermfg=White   ctermbg=Black   cterm=NONE'
+:exe  'highlight  Terminal        guifg='.ui_1.'      guibg='.ui_11.'   guisp='.ui_11.'   gui=NONE       ctermfg=White   ctermbg=Black   cterm=NONE'
 "hi CTagsImport -- no settings --
 "hi CTagsGlobalVariable -- no settings --
 "hi EnumerationValue -- no settings --
@@ -193,11 +222,14 @@ let g:terminal_color_15 = '#eff0eb'
 
 " Transparent Background
 if g:SnazzyTransparent == 1
-    highlight  Normal              guibg=NONE   ctermbg=NONE
-    highlight  SignColumn          guibg=NONE   ctermbg=NONE
-    highlight  DiffAdd             guibg=NONE   ctermbg=NONE
-    highlight  DiffDelete          guibg=NONE   ctermbg=NONE
-    highlight  DiffChange          guibg=NONE   ctermbg=NONE
-    highlight  SignifyLineDelete   guibg=NONE   ctermbg=NONE
-    highlight  SignifyLineChange   guibg=NONE   ctermbg=NONE
+  highlight  Normal              guibg=NONE   ctermbg=NONE
+  " Setting Terminal guibg,ctermbg=NONE will NOT set transparent background
+  " with set guitermcolors. See https://github.com/vim/vim/issues/2361.
+  " highlight  Terminal            guibg=NONE   ctermbg=NONE
+  highlight  SignColumn          guibg=NONE   ctermbg=NONE
+  highlight  DiffAdd             guibg=NONE   ctermbg=NONE
+  highlight  DiffDelete          guibg=NONE   ctermbg=NONE
+  highlight  DiffChange          guibg=NONE   ctermbg=NONE
+  highlight  SignifyLineDelete   guibg=NONE   ctermbg=NONE
+  highlight  SignifyLineChange   guibg=NONE   ctermbg=NONE
 endif
